@@ -81,7 +81,7 @@ namespace ClientOS
         private void ShowMessageErrorConnection()
         {
             MessageBox.Show("Соеденение прервано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            label1.Text = "Офлайн";
+            this.Text = "Офлайн";
         }
 
         #endregion

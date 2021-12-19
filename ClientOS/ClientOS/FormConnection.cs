@@ -78,8 +78,8 @@ namespace ClientOS
         {
             switch (comboBox1.SelectedIndex)
             {
-                case 0: textBox1.Text = "127.0.0.1:7070"; break;
-                case 1: textBox1.Text = "127.0.0.1:7071"; break;
+                case 0: textBox1.Text = "127.0.0.1:7071"; break;
+                case 1: textBox1.Text = "127.0.0.1:7070"; break;
 
                 default: break;
             }
