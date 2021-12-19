@@ -94,7 +94,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Обновить информацию";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.buttonGetSystemInfo);
+            this.button2.Click += new System.EventHandler(this.ButtonGetSystemInfo);
             // 
             // groupBox1
             // 
@@ -121,6 +121,7 @@
             this.Controls.Add(this.button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "FormServer2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Подключен к серверу №2";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormServer2_FormClosed);
             this.groupBox1.ResumeLayout(false);

@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClientOS
 {
     public partial class FormServer2 : Form
     {
+        #region Fields
+
         private Form _parentForm;
         private TcpClient _clientSocket;
+
+        #endregion
+
+        #region Constructors
 
         public FormServer2(Form parentForm, TcpClient socket)
         {
@@ -23,12 +22,13 @@ namespace ClientOS
             _clientSocket = socket;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        #endregion
+
+        #region PrivateMethods
+
+        private void ButtonClose(object sender, EventArgs e)
         {
             this.Close();
-            _clientSocket.Close();
-
-            _parentForm.Show();
         }
 
         private void FormServer2_FormClosed(object sender, FormClosedEventArgs e)
@@ -37,13 +37,35 @@ namespace ClientOS
             _parentForm.Show();
         }
 
-        private void buttonGetSystemInfo(object sender, EventArgs e)
+        private void ButtonGetSystemInfo(object sender, EventArgs e)
         {
-            textBoxPhysicMemory.Text = ServerReqest.ReqestToServer(Reqest.GetPhysicMemory,_clientSocket);
-            textBoxVirtualMemory.Text = ServerReqest.ReqestToServer(Reqest.GetVirtualMemory, _clientSocket);
-
-            textBoxPhysicMemory.Text+="%";
-            textBoxVirtualMemory.Text+="%";
+            SetResult(Reqest.GetPhysicMemory, ref textBoxPhysicMemory);
+            SetResult(Reqest.GetVirtualMemory, ref textBoxVirtualMemory);
         }
+
+        private void SetResult(string reqest, ref TextBox textBox)
+        {
+            if(ServerReqest.TryReqestToServer(out var result, reqest, _clientSocket))
+            {
+                textBox.Text = result;
+                textBox.Text += "%";
+            }
+            else
+            {
+                if(!this.Text.Contains("Офлайн"))
+                    ShowMessageErrorConnection();
+            }
+        }
+
+        private void ShowMessageErrorConnection()
+        {
+            MessageBox.Show("Соеденение прервано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            this.Text = "Офлайн";
+
+            textBoxPhysicMemory.Text = "Офлайн";
+            textBoxVirtualMemory.Text = "Офлайн";
+        }
+
+        #endregion
     }
 }

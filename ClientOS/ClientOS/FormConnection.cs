@@ -65,6 +65,10 @@ namespace ClientOS
                 formServer2.Show();
                 button1.Enabled = true;
             }
+            else
+            {
+                MessageBox.Show(this, "Вы не можете управлять данным сервером.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
         }
     }
 }

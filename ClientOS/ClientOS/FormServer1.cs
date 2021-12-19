@@ -36,8 +36,16 @@ namespace ClientOS
 
         private void ButtonHideServerConsole(object sender, EventArgs e)
         {
-            var result = ServerReqest.ReqestToServer((int)numericUpDown1.Value+Reqest.HideServerConsole,_clientSocket);
-            MessageBox.Show(result);
+            string newReqest = (int)numericUpDown1.Value + Reqest.HideServerConsole;
+
+            if (ServerReqest.TryReqestToServer(out var result, newReqest, _clientSocket))
+            {
+                MessageBox.Show(result, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                ShowMessageErrorConnection();
+            }         
         }
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
@@ -53,12 +61,27 @@ namespace ClientOS
 
         private void ShowGPUNameOnServer()
         {
-            textBoxGPUName.Text = ServerReqest.ReqestToServer(Reqest.GetGPUName, _clientSocket);
+            string newReqest = Reqest.GetGPUName;
+
+            if(ServerReqest.TryReqestToServer(out var result, newReqest, _clientSocket))
+            {
+                textBoxGPUName.Text = result;
+            }
+            else
+            {
+                ShowMessageErrorConnection();
+            }
         }
 
         private void OnLoadForm(object sender, EventArgs e)
         {
             ShowGPUNameOnServer();
+        }
+
+        private void ShowMessageErrorConnection()
+        {
+            MessageBox.Show("Соеденение прервано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            label1.Text = "Офлайн";
         }
 
         #endregion
