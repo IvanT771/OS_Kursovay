@@ -1,19 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server1
 {
     public class ServerTcp
     {
+        #region Constant Fields
+
         const string ip = "127.0.0.1";
         const int port = 7071;
 
-        [Obsolete]
+        #endregion
+
+        #region PublicMethods
+
+        /// <summary>
+        /// Запускает сервер для прослушивания соеденений
+        /// </summary>
         public void StartServer()
         {
             try
@@ -39,10 +43,11 @@ namespace Server1
             }
             catch 
             {
-
                 Console.WriteLine("Failed to start the server!");
             }
            
         }
+
+        #endregion
     }
 }

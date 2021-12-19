@@ -61,12 +61,6 @@ namespace ClientOS
             ShowGPUNameOnServer();
         }
 
-        private bool TryReqestToServer(out string result, string reqestToServer, TcpClient clientSocket)
-        {
-            result = ServerReqest.ReqestToServer(reqestToServer, clientSocket);
-
-
-        }
         #endregion
     }
 }

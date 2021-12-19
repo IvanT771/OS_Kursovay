@@ -1,17 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using Topshelf.Runtime.Windows;
 using System.Management;
 
 namespace Server1
-{
-   
+{  
     public class SystemInfo
     {
+        #region Constant Fields
+
+        public const int SW_HIDE = 0;
+        public const int SW_SHOW = 5;
+
+        #endregion
+
+        #region Field
 
         [DllImport("kernel32.dll")]
         static public extern IntPtr GetConsoleWindow();
@@ -19,9 +22,14 @@ namespace Server1
         [DllImport("user32.dll")]
         static public extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        public const int SW_HIDE = 0;
-        public const int SW_SHOW = 5;
+        #endregion
 
+        #region PublicMethods
+
+        /// <summary>
+        /// Возвращает имя видеокарты
+        /// </summary>
+        /// <returns></returns>
         public string GetGPUName()
         {
             ManagementObjectSearcher objvide = new ManagementObjectSearcher("select * from Win32_VideoController");
@@ -34,7 +42,11 @@ namespace Server1
             return "Error";
         } 
 
-
+        /// <summary>
+        /// Срыкает на заданное время окно сервера
+        /// </summary>
+        /// <param name="hideTime">время в млс</param>
+        /// <returns></returns>
         public string HideServerConsole(int hideTime)
         {
             try 
@@ -42,7 +54,7 @@ namespace Server1
                 var handle = GetConsoleWindow();
                 ShowWindow(handle, SW_HIDE);
 
-                ShowConsoleOnTimeAsync(hideTime);
+                _ = ShowConsoleOnTimeAsync(hideTime, handle);
 
                 return "The operation was successfully completed";
             }
@@ -52,12 +64,17 @@ namespace Server1
             }
         }
 
-        private async Task ShowConsoleOnTimeAsync(int hideTime)
+        #endregion
+
+        #region PrivateMethods
+
+        private async Task ShowConsoleOnTimeAsync(int hideTime, IntPtr handle)
         {
             await Task.Delay(hideTime);
 
-            var handle = GetConsoleWindow();
             ShowWindow(handle, SW_SHOW);
         }
+
+        #endregion
     }
 }

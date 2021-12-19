@@ -10,9 +10,15 @@ namespace Server1
 {
     public class HandleClinet
     {
+        #region Fields 
+
         private SystemInfo _systemInfo = new SystemInfo();
         private TcpClient _clientSocket;
         private string _clientId;
+
+        #endregion
+
+        #region PrivateMethods
 
         public void StartClient(TcpClient inClientSocket, string id)
         {
@@ -38,8 +44,6 @@ namespace Server1
 
             Console.WriteLine("[MessageFromServer]: " + message);
         }
-
-
 
         /// <summary>
         /// Получение запросов клиента
@@ -75,6 +79,10 @@ namespace Server1
             }
         }
 
+        /// <summary>
+        /// Обрабатывает сообщение от клиента
+        /// </summary>
+        /// <param name="message"></param>
         private void MessageProcessing(string message)
         {
             if (message.Contains("HideServerConsole"))
@@ -91,7 +99,6 @@ namespace Server1
             }
         }
 
-
         private void SendingGPUName()
         {
             var result = _systemInfo.GetGPUName();
@@ -103,5 +110,7 @@ namespace Server1
             var result = _systemInfo.HideServerConsole(time);
             ShowMessageToClient(result);
         }
+
+        #endregion
     }
 }
