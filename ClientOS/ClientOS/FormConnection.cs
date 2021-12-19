@@ -13,31 +13,34 @@ namespace ClientOS
 {
     public partial class FormConnection : Form
     {
-        private NetworkStream _serverStream;
+        #region Constructors
 
         public FormConnection()
         {
             InitializeComponent();
+
+            comboBox1.SelectedIndex = 0;
         }
 
-        
+        #endregion
 
-        private void buttonConnection(object sender, EventArgs e)
+        #region PrivateMethods
+
+        private void ButtonConnection(object sender, EventArgs e)
         {
             button1.Enabled = false;
 
             TcpClient clientSocket = new TcpClient();
 
-            string ip = textBox1.Text.Split(':')[0];
-            int port = int.Parse(textBox1.Text.Split(':')[1]);
-
             try
             {
+                string ip = textBox1.Text.Split(':')[0];
+                int port = int.Parse(textBox1.Text.Split(':')[1]);
+
                 clientSocket.Connect(ip, port);
                 var returndata = ServerReqest.ReqestToServer(Reqest.GetNameServer,clientSocket);
 
                 OpenForm(returndata,clientSocket);
-
             }
             catch 
             {
@@ -70,5 +73,20 @@ namespace ClientOS
                 MessageBox.Show(this, "Вы не можете управлять данным сервером.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
         }
+
+        private void СomboBox1Changed(object sender, EventArgs e)
+        {
+            switch (comboBox1.SelectedIndex)
+            {
+                case 0: textBox1.Text = "127.0.0.1:7070"; break;
+                case 1: textBox1.Text = "127.0.0.1:7071"; break;
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+
     }
 }

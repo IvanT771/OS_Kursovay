@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClientOS
@@ -20,6 +21,8 @@ namespace ClientOS
             InitializeComponent();
             _parentForm = parentForm;
             _clientSocket = socket;
+
+            UpdateInfoAsync();
         }
 
         #endregion
@@ -64,6 +67,17 @@ namespace ClientOS
 
             textBoxPhysicMemory.Text = "Офлайн";
             textBoxVirtualMemory.Text = "Офлайн";
+        }
+
+        private async Task UpdateInfoAsync()
+        {
+            while (!this.Text.Contains("Офлайн"))
+            {
+                await Task.Delay(3000);
+                SetResult(Reqest.GetPhysicMemory, ref textBoxPhysicMemory);
+                SetResult(Reqest.GetVirtualMemory, ref textBoxVirtualMemory);
+            }
+            
         }
 
         #endregion

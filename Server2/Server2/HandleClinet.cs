@@ -36,7 +36,7 @@ namespace Server2
             networkStream.Write(sendBytes, 0, sendBytes.Length);
             networkStream.Flush();
 
-            Console.WriteLine("[MessageFromServer]: " + message);
+            Console.WriteLine($"[{DateTime.Now}][Server]: {message}");
         }
 
 
@@ -61,7 +61,7 @@ namespace Server2
                     messageFromClient = messageFromClient.Substring(0, messageFromClient.IndexOf("$"));
 
                     //Вывод сообщения в лог сервера
-                    Console.WriteLine($"[MessageFromClient {_clientId}]: {messageFromClient}");
+                    Console.WriteLine($"[{DateTime.Now}][Client {_clientId}]: {messageFromClient}");
 
                     //Обрабатываем сообщение
                     MessageProcessing(messageFromClient);
@@ -69,7 +69,7 @@ namespace Server2
                 }
                 catch 
                 {
-                    Console.WriteLine($"Client {_clientId} disconnect!");
+                    Console.WriteLine($"[{DateTime.Now}] Client {_clientId} disconnect!");
                     break;
                 }
             }

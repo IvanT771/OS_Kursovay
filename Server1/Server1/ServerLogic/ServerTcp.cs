@@ -27,12 +27,12 @@ namespace Server1
                 int counter = 0; //Счетчик подключенных клиентов
 
                 serverSocket.Start();
-                Console.WriteLine($"Server started on port {port}.");
+                Console.WriteLine($"[{DateTime.Now}] Server started on port {port}.");
 
                 while (true)
                 {
                     clientSocket = serverSocket.AcceptTcpClient();
-                    Console.WriteLine($"Client {++counter} сonnected to the server.");
+                    Console.WriteLine($"[{DateTime.Now}] Client {++counter} сonnected to the server.");
 
                     //Создаем нового клиента
                     HandleClinet client = new HandleClinet();
@@ -43,7 +43,7 @@ namespace Server1
             }
             catch 
             {
-                Console.WriteLine("Failed to start the server!");
+                Console.WriteLine($"[{DateTime.Now}] Failed to start the server!");;
             }
            
         }
