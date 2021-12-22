@@ -80,7 +80,7 @@ namespace ClientOS
 
         private void ShowMessageErrorConnection()
         {
-            MessageBox.Show("Соеденение прервано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Соединение прервано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             this.Text = "Офлайн";
         }
 

@@ -14,7 +14,7 @@ namespace ClientOS
         public static string ReqestToServer(string reqest, TcpClient clientSocket)
         {
             if(!clientSocket.Connected)
-                return "Соеденение прервано!";
+                return "Соединение прервано!";
 
             //Отправка запроса на сервер 
             NetworkStream serverStream = clientSocket.GetStream();
